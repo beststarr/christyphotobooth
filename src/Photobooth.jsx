@@ -123,7 +123,6 @@ const Photobooth = () => {
       return;
     }
   
-  
     const processedPhotos = await Promise.all(
       originalPhotos.map((photo) => applyEffect(photo, selectedEffect))
     );
@@ -147,6 +146,7 @@ const Photobooth = () => {
     }, 6000); 
     return () => clearInterval(interval);
   }, []);
+  
   useEffect(() => {
     applyEffectsToPhotos();
   }, [selectedEffect]);  
@@ -156,8 +156,8 @@ const Photobooth = () => {
     fontSize: selectedFontSize,
   });
 
-      return (
-        <div
+  return (
+    <div
       style={{
         minHeight: "100vh",
         transition: "background 1s ease-in-out",
@@ -165,65 +165,59 @@ const Photobooth = () => {
       }}
       className="flex justify-center items-center p-6"
     >
-      <div className="flex flex-col lg:flex-row items-start bg-white shadow-lg rounded-lg p-4 max-w-full w-full">
-        <div className="flex flex-col items-center mr-6">
-        <h1 className="text-3xl text-pink-600 mb-6 font-bold font-[Pacifico]">Christy Photobooth</h1>
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline  
-          className="border rounded mb-2 w-[320px] h-[240px]"
-          style={{ transform: isMirrored ? "scaleX(-1)" : "none" }} 
-        />
-
-        <button
-          onClick={startCaptureSequence}
-          className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full shadow-lg hover:from-purple-500 hover:to-pink-500 transition-all mb-4 w-full text-sm"
-          disabled={isCapturing || photos.length >= 4}
-        >
-          Mulai Foto
-        </button>
-
-      <div className="relative flex items-center justify-center w-[40px] h-[40px] mb-6"> 
-        <svg
-          className="w-[60px] h-[60px] animate-spin-slow"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 100 100"
-          style={{
-            transform: `rotate(${(3 - timer) * 360}deg)`,
-            transition: "transform 1s ease-out",
-          }}
-        >
-          <circle cx="50" cy="50" r="45" stroke="#ccc" strokeWidth="3" fill="none" />
-          <circle
-            cx="50"
-            cy="50"
-            r="45"
-            stroke="#ff69b4"
-            strokeWidth="3"
-            fill="none"
-            strokeDasharray="283"
-            strokeDashoffset={(countdownProgress / 100) * 283}
-            style={{
-              transition: "stroke-dashoffset 1s ease-out",
-            }}
+      <div className="flex flex-col lg:flex-row items-start bg-white shadow-lg rounded-lg p-4 w-full max-w-screen-md">
+        <div className="flex flex-col items-center mr-6 mb-6 lg:mb-0">
+          <h1 className="text-3xl text-pink-600 mb-6 font-bold font-[Pacifico]">Christy Photobooth</h1>
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline  
+            className="border rounded mb-2 w-full max-w-xs"
+            style={{ transform: isMirrored ? "scaleX(-1)" : "none" }} 
           />
-        </svg>
-        <div>
-       
-        <span
-        className="absolute text-sm text-pink-600"
-        style={{
-          top: "50%",         
-          left: "50%",        
-          transform: "translate(-50%, -50%)" 
-        }}
-      >
-        {timer}
-      </span>
-      </div>
-
-      </div>
+          <button
+            onClick={startCaptureSequence}
+            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full shadow-lg hover:from-purple-500 hover:to-pink-500 transition-all mb-4 w-full text-sm"
+            disabled={isCapturing || photos.length >= 4}
+          >
+            Mulai Foto
+          </button>
+          <div className="relative flex items-center justify-center w-[40px] h-[40px] mb-6"> 
+            <svg
+              className="w-[60px] h-[60px] animate-spin-slow"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              style={{
+                transform: `rotate(${(3 - timer) * 360}deg)`,
+                transition: "transform 1s ease-out",
+              }}
+            >
+              <circle cx="50" cy="50" r="45" stroke="#ccc" strokeWidth="3" fill="none" />
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                stroke="#ff69b4"
+                strokeWidth="3"
+                fill="none"
+                strokeDasharray="283"
+                strokeDashoffset={(countdownProgress / 100) * 283}
+                style={{
+                  transition: "stroke-dashoffset 1s ease-out",
+                }}
+              />
+            </svg>
+            <span
+              className="absolute text-sm text-pink-600"
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)" 
+              }}
+            >
+              {timer}
+            </span>
+          </div>
           <label className="mt-4">
             <input
               type="checkbox"
@@ -235,54 +229,51 @@ const Photobooth = () => {
           </label>
         </div>
         <div
-        id="photo-collage"
-        className="relative flex flex-col items-center bg-white p-2 pb-8 rounded-lg mr-4 min-h-[400px]"
-        style={{ borderColor: selectedFrameColor }}
-      >
-
-{photos.map((photo, index) => (
-  <img
-    key={index}
-    src={photo}
-    alt={`Foto ${index + 1}`}
-    className="border mb-2 w-[160px] h-[120px] rounded-2xl shadow-md"
-    style={{ borderColor: selectedFrameColor, borderWidth: "2px" }}
-  />
-))}
-
-<div className="text-center mt-[-2px] mb-0 overflow-visible caption-print">
-  <p
-    style={{
-      color: selectedFrameColor,
-      fontFamily: selectedFont,
-      fontSize: selectedFontSize,
-      whiteSpace: "nowrap",
-      overflow: "visible",
-      textOverflow: "ellipsis",
-      textAlign: "center",
-      marginTop: "-5px",
-    }}
-  >
-    {captions}
-  </p>
-</div>
-
-      </div>
-        <div className="flex flex-col items-center ml-4 space-y-4 p-6 bg-gradient-to-r from-pink-100 to-purple-100 rounded-lg shadow-lg w-[300px]">
+          id="photo-collage"
+          className="relative flex flex-col items-center bg-white p-2 pb-8 rounded-lg mr-4 min-h-[400px] w-full"
+          style={{ borderColor: selectedFrameColor }}
+        >
+          {photos.map((photo, index) => (
+            <img
+              key={index}
+              src={photo}
+              alt={`Foto ${index + 1}`}
+              className="border mb-2 w-full max-w-xs h-auto rounded-2xl shadow-md"
+              style={{ borderColor: selectedFrameColor, borderWidth: "2px" }}
+            />
+          ))}
+          <div className="text-center mt-[-2px] mb-0 overflow-visible caption-print">
+            <p
+              style={{
+                color: selectedFrameColor,
+                fontFamily: selectedFont,
+                fontSize: selectedFontSize,
+                whiteSpace: "nowrap",
+                overflow: "visible",
+                textOverflow: "ellipsis",
+                textAlign: "center",
+                marginTop: "-5px",
+              }}
+            >
+              {captions}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center ml-4 space-y-4 p-6 bg-gradient-to-r from-pink-100 to-purple-100 rounded-lg shadow-lg w-full max-w-xs">
           <label className="text-lg font-semibold mb-2">Pilih Efek:</label>
           <select
-              onChange={(e) => setSelectedEffect(e.target.value)}
-              className="border rounded p-2 w-full mb-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition"
-              value={selectedEffect}
-            >
-              <option value="">Normal</option>  
-              <option value="grayscale(100%)">Grayscale</option>
-              <option value="sepia(100%)">Sepia</option>
-              <option value="contrast(200%)">Kontras</option>
-              <option value="brightness(120%)">Percantik</option>
-              <option value="saturate(150%)">Warna Tajam</option>
-              <option value="blur(2px)">Halus</option>
-            </select>
+            onChange={(e) => setSelectedEffect(e.target.value)}
+            className="border rounded p-2 w-full mb-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition"
+            value={selectedEffect}
+          >
+            <option value="">Normal</option>  
+            <option value="grayscale(100%)">Grayscale</option>
+            <option value="sepia(100%)">Sepia</option>
+            <option value="contrast(200%)">Kontras</option>
+            <option value="brightness(120%)">Percantik</option>
+            <option value="saturate(150%)">Warna Tajam</option>
+            <option value="blur(2px)">Halus</option>
+          </select>
 
           <label className="text-lg font-semibold mb-2">Pilih Warna Frame:</label>
           <input
@@ -341,7 +332,6 @@ const Photobooth = () => {
           </button>
         </div>
       </div>
-
       <canvas ref={canvasRef} className="hidden" width="640" height="480"></canvas>
     </div>
   );
