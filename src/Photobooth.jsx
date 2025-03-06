@@ -260,7 +260,7 @@ const Photobooth = () => {
       overflow: "visible",
       textOverflow: "ellipsis",
       textAlign: "center",
-      marginTop: "-20px",
+      marginTop: "-5px",
     }}
   >
     {captions}
