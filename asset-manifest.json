@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/christyphotobooth/static/css/main.7fc5e88b.css",
-    "main.js": "/christyphotobooth/static/js/main.0a203350.js",
+    "main.css": "/christyphotobooth/static/css/main.4f64a7a3.css",
+    "main.js": "/christyphotobooth/static/js/main.66880f38.js",
     "static/js/453.cd80dece.chunk.js": "/christyphotobooth/static/js/453.cd80dece.chunk.js",
     "static/media/great-vibes-latin-ext-400-normal.woff2": "/christyphotobooth/static/media/great-vibes-latin-ext-400-normal.0bf01164dac179702ae2.woff2",
     "static/media/great-vibes-latin-ext-400-normal.woff": "/christyphotobooth/static/media/great-vibes-latin-ext-400-normal.7368b07183d3e5f911d8.woff",
@@ -58,12 +58,12 @@
     "static/media/great-vibes-greek-ext-400-normal.woff": "/christyphotobooth/static/media/great-vibes-greek-ext-400-normal.452b2fdf08fb5a476c65.woff",
     "static/media/roboto-greek-ext-400-normal.woff": "/christyphotobooth/static/media/roboto-greek-ext-400-normal.a0baf7d6726d8f751a27.woff",
     "index.html": "/christyphotobooth/index.html",
-    "main.7fc5e88b.css.map": "/christyphotobooth/static/css/main.7fc5e88b.css.map",
-    "main.0a203350.js.map": "/christyphotobooth/static/js/main.0a203350.js.map",
+    "main.4f64a7a3.css.map": "/christyphotobooth/static/css/main.4f64a7a3.css.map",
+    "main.66880f38.js.map": "/christyphotobooth/static/js/main.66880f38.js.map",
     "453.cd80dece.chunk.js.map": "/christyphotobooth/static/js/453.cd80dece.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7fc5e88b.css",
-    "static/js/main.0a203350.js"
+    "static/css/main.4f64a7a3.css",
+    "static/js/main.66880f38.js"
   ]
 }
