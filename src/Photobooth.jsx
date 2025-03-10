@@ -21,7 +21,7 @@ const Photobooth = () => {
   const [selectedFontSize, setSelectedFontSize] = useState("16px");
   const [isFinished, setIsFinished] = useState(false);
   const [background, setBackground] = useState("linear-gradient(to right, #fbc2eb, #a6c1ee)");
-  const [isMirrored, setIsMirrored] = useState(false); 
+  const [isMirror, setIsMirror] = useState(false);
   const [countdownProgress, setCountdownProgress] = useState(0); 
 
   useEffect(() => {
@@ -42,6 +42,10 @@ const Photobooth = () => {
     }
   };
 
+  const toggleMirror = () => {
+    setIsMirror(!isMirror);  // Ganti state cermin
+  };
+  
   const capturePhoto = () => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
@@ -173,62 +177,72 @@ const Photobooth = () => {
         autoPlay
         playsInline  
         className="border rounded mb-2 w-full h-auto max-w-[480px] sm:max-w-[640px]" 
-        style={{ transform: isMirrored ? "scaleX(-1)" : "none" }} 
+        style={{ transform: isMirror ? "scaleX(-1)" : "none" }} 
       />
+      
+      <div className="flex justify-center mt-4 mb-4">
+  <button
+    onClick={toggleMirror}
+    className="py-1 px-6 rounded-full shadow-md text-sm transition-all duration-300 text-white bg-gradient-to-r from-pink-500 to-purple-500 hover:from-purple-500 hover:to-pink-500"
+  >
+    {isMirror ? 'Matikan Cermin' : 'Nyalakan Cermin'}
+  </button>
+</div>
 
-      <button
-        onClick={startCaptureSequence}
-        className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full shadow-lg hover:from-purple-500 hover:to-pink-500 transition-all mb-4 w-full text-sm"
-        disabled={isCapturing || photos.length >= 4}
-      >
-        Mulai Foto
-      </button>
+<button
+  onClick={startCaptureSequence}
+  className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full shadow-lg hover:from-purple-500 hover:to-pink-500 transition-all mb-4 w-full text-sm"
+  disabled={isCapturing || photos.length >= 4}
+>
+  Mulai Foto
+</button>
 
-      <div className="relative flex items-center justify-center w-[40px] h-[40px] mb-6"> 
-        <svg
-          className="w-[60px] h-[60px] animate-spin-slow"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 100 100"
-          style={{
-            transform: `rotate(${(3 - timer) * 360}deg)`,
-            transition: "transform 1s ease-out",
-          }}
-        >
-          <circle cx="50" cy="50" r="45" stroke="#ccc" strokeWidth="3" fill="none" />
-          <circle
-            cx="50"
-            cy="50"
-            r="45"
-            stroke="#ff69b4"
-            strokeWidth="3"
-            fill="none"
-            strokeDasharray="283"
-            strokeDashoffset={(countdownProgress / 100) * 283}
-            style={{
-              transition: "stroke-dashoffset 1s ease-out",
-            }}
-          />
-        </svg>
-        <div>
-          <span
-            className="absolute text-sm text-pink-600"
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)"
-            }}
-          >
-            {timer}
-          </span>
-        </div>
-      </div>
-    </div>
+<div className="relative flex items-center justify-center w-[40px] h-[40px] mb-6"> 
+  <svg
+    className="w-[60px] h-[60px] animate-spin-slow"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    style={{
+      transform: `rotate(${(3 - timer) * 360}deg)`,
+      transition: "transform 1s ease-out",
+    }}
+  >
+    <circle cx="50" cy="50" r="45" stroke="#ccc" strokeWidth="3" fill="none" />
+    <circle
+      cx="50"
+      cy="50"
+      r="45"
+      stroke="#ff69b4"
+      strokeWidth="3"
+      fill="none"
+      strokeDasharray="283"
+      strokeDashoffset={(countdownProgress / 100) * 283}
+      style={{
+        transition: "stroke-dashoffset 1s ease-out",
+      }}
+    />
+  </svg>
+  <div>
+    <span
+      className="absolute text-sm text-pink-600"
+      style={{
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)"
+      }}
+    >
+      {timer}
+    </span>
+  </div>
+</div>
+</div>
 
     <div
-      id="photo-collage"
-      className="relative flex flex-col items-center bg-white p-2 pb-8 rounded-lg mr-4 min-h-[400px] w-full max-w-[320px]"
-      style={{ borderColor: selectedFrameColor }}
-    >
+  id="photo-collage"
+  className="relative flex flex-col items-center bg-white p-2 pb-5 rounded-lg mx-auto"
+  style={{ borderColor: selectedFrameColor, display: 'flex', justifyContent: 'center' }}
+>
+
       {photos.map((photo, index) => (
         <img
           key={index}
@@ -256,7 +270,7 @@ const Photobooth = () => {
       </div>
     </div>
 
-    <div className="flex flex-col items-center ml-4 space-y-4 p-6 bg-gradient-to-r from-pink-100 to-purple-100 rounded-lg shadow-lg w-full max-w-[320px] sm:max-w-[400px]">
+    <div className="flex flex-col items-center ml-20 space-y-4 p-6 bg-gradient-to-r from-pink-100 to-purple-100 rounded-lg shadow-lg w-full max-w-[320px] sm:max-w-[400px]">
       <label className="text-lg font-semibold mb-2">Pilih Efek:</label>
       <select
         onChange={(e) => setSelectedEffect(e.target.value)}
